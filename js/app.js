@@ -3789,6 +3789,26 @@
                 document.documentElement.classList.add(className);
             }));
         }
+        let isMobile = {
+            Android: function() {
+                return navigator.userAgent.match(/Android/i);
+            },
+            BlackBerry: function() {
+                return navigator.userAgent.match(/BlackBerry/i);
+            },
+            iOS: function() {
+                return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+            },
+            Opera: function() {
+                return navigator.userAgent.match(/Opera Mini/i);
+            },
+            Windows: function() {
+                return navigator.userAgent.match(/IEMobile/i);
+            },
+            any: function() {
+                return isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows();
+            }
+        };
         function getHash() {
             if (location.hash) return location.hash.replace("#", "");
         }
@@ -8220,9 +8240,11 @@
         function handleIntersect(entries, observer) {
             entries.forEach((entry => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add("anim");
-                    observer.unobserve(entry.target);
-                }
+                    if (!entry.target.classList.contains("anim")) {
+                        entry.target.classList.add("anim");
+                        entry.target.style.transition = "transform 1s ease 0s";
+                    }
+                } else entry.target.classList.remove("anim");
             }));
         }
         let animatedImages = document.querySelectorAll('[id^="animatedImage"]');
@@ -8234,14 +8256,16 @@
                 observer.observe(target);
             }));
         }), 500);
-        var script_elements = document.querySelectorAll(".phone");
-        var maskOptions = {
-            mask: "+7(000)000-00-00",
-            lazy: false
-        };
-        script_elements.forEach((function(element) {
-            new IMask(element, maskOptions);
-        }));
+        var phones = document.querySelectorAll(".phone");
+        if (phones) {
+            var maskOptions = {
+                mask: "+7(000)000-00-00",
+                lazy: false
+            };
+            phones.forEach((function(element) {
+                new IMask(element, maskOptions);
+            }));
+        }
         document.addEventListener("DOMContentLoaded", (function() {
             const menuList = document.querySelector(".menu__list");
             const subMenus = document.querySelectorAll(".menu__submenu .menu__sublist .menu__item");
@@ -8451,26 +8475,39 @@
                 const zoomArrowRight = zoomSlider.querySelector(".zoom-slider__arrow-right");
                 let swiper;
                 let controlsTimeout;
-                function showControls() {
-                    zoomButton.classList.remove("hidden");
-                    zoomArrowLeft.classList.remove("hidden");
-                    zoomArrowRight.classList.remove("hidden");
-                    clearTimeout(controlsTimeout);
-                    controlsTimeout = setTimeout(hideControls, 3e3);
-                }
-                function hideControls() {
-                    zoomButton.classList.add("hidden");
-                    zoomArrowLeft.classList.add("hidden");
-                    zoomArrowRight.classList.add("hidden");
-                }
-                function handleTouchStart() {
-                    showControls();
-                }
-                function handleTouchMove() {
-                    showControls();
-                }
-                function handleTouchEnd() {
-                    showControls();
+                if (isMobile.any()) {
+                    function showControls() {
+                        zoomButton.classList.remove("hidden");
+                        zoomArrowLeft.classList.remove("hidden");
+                        zoomArrowRight.classList.remove("hidden");
+                        clearTimeout(controlsTimeout);
+                        controlsTimeout = setTimeout(hideControls, 3e3);
+                    }
+                    function hideControls() {
+                        zoomButton.classList.add("hidden");
+                        zoomArrowLeft.classList.add("hidden");
+                        zoomArrowRight.classList.add("hidden");
+                    }
+                    function handleTouchStart() {
+                        showControls();
+                    }
+                    function handleTouchMove() {
+                        showControls();
+                    }
+                    function handleTouchEnd() {
+                        showControls();
+                    }
+                    zoomSlider.addEventListener("touchstart", handleTouchStart);
+                    zoomSlider.addEventListener("touchmove", handleTouchMove);
+                    zoomSlider.addEventListener("touchend", handleTouchEnd);
+                    let lastInteractionTime = Date.now();
+                    document.addEventListener("touchstart", (() => {
+                        lastInteractionTime = Date.now();
+                        showControls();
+                    }));
+                    setInterval((() => {
+                        if (Date.now() - lastInteractionTime > 3e3) hideControls();
+                    }), 1e3);
                 }
                 if (document.querySelector(".gallery")) page.addEventListener("click", (event => {
                     if (event.target.closest(".gallery__photo")) {
@@ -8552,20 +8589,9 @@
                 function updateZoomButton(scale) {
                     if (scale <= 1) zoomButton.classList.remove("zoomed"); else zoomButton.classList.add("zoomed");
                 }
-                zoomSlider.addEventListener("touchstart", handleTouchStart);
-                zoomSlider.addEventListener("touchmove", handleTouchMove);
-                zoomSlider.addEventListener("touchend", handleTouchEnd);
-                let lastInteractionTime = Date.now();
-                document.addEventListener("touchstart", (() => {
-                    lastInteractionTime = Date.now();
-                    showControls();
-                }));
-                setInterval((() => {
-                    if (Date.now() - lastInteractionTime > 3e3) hideControls();
-                }), 1e3);
             }
         }));
-        window["FLS"] = true;
+        window["FLS"] = false;
         isWebp();
         menuInit();
         pageNavigation();
