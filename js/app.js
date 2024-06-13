@@ -8237,14 +8237,22 @@
         }
         window.addEventListener("resize", applyZoom);
         window.addEventListener("DOMContentLoaded", applyZoom);
+        function addTransitionToParentAndImg(element, property, duration, timingFunction, delay) {
+            element.style.transition = `${property} ${duration} ${timingFunction} ${delay}`;
+            const imgElements = element.querySelectorAll("img");
+            imgElements.forEach((img => {
+                img.style.transition = `${property} ${duration} ${timingFunction} ${delay}`;
+            }));
+        }
         function handleIntersect(entries, observer) {
             entries.forEach((entry => {
+                const target = entry.target;
                 if (entry.isIntersecting) {
-                    if (!entry.target.classList.contains("anim")) {
-                        entry.target.classList.add("anim");
-                        entry.target.style.transition = "transform 1s ease 0s";
+                    if (!target.classList.contains("anim")) {
+                        target.classList.add("anim");
+                        addTransitionToParentAndImg(target, "transform", "1s", "ease", "0s");
                     }
-                } else entry.target.classList.remove("anim");
+                } else if (target.classList.contains("anim")) target.classList.remove("anim");
             }));
         }
         let animatedImages = document.querySelectorAll('[id^="animatedImage"]');
