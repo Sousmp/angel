@@ -3775,380 +3775,6 @@
     }
     (() => {
         "use strict";
-        const modules_flsModules = {};
-        function isWebp() {
-            function testWebP(callback) {
-                let webP = new Image;
-                webP.onload = webP.onerror = function() {
-                    callback(webP.height == 2);
-                };
-                webP.src = "data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAACyAgCdASoCAAIALmk0mk0iIiIiIgBoSygABc6WWgAA/veff/0PP8bA//LwYAAA";
-            }
-            testWebP((function(support) {
-                let className = support === true ? "webp" : "no-webp";
-                document.documentElement.classList.add(className);
-            }));
-        }
-        let isMobile = {
-            Android: function() {
-                return navigator.userAgent.match(/Android/i);
-            },
-            BlackBerry: function() {
-                return navigator.userAgent.match(/BlackBerry/i);
-            },
-            iOS: function() {
-                return navigator.userAgent.match(/iPhone|iPad|iPod/i);
-            },
-            Opera: function() {
-                return navigator.userAgent.match(/Opera Mini/i);
-            },
-            Windows: function() {
-                return navigator.userAgent.match(/IEMobile/i);
-            },
-            any: function() {
-                return isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows();
-            }
-        };
-        function getHash() {
-            if (location.hash) return location.hash.replace("#", "");
-        }
-        let bodyLockStatus = true;
-        let bodyUnlock = (delay = 500) => {
-            let body = document.querySelector("body");
-            let PopupWrapper = document.querySelectorAll(".popup__wrapper");
-            if (bodyLockStatus) {
-                let lock_padding = document.querySelectorAll("[data-lp]");
-                setTimeout((() => {
-                    for (let index = 0; index < lock_padding.length; index++) {
-                        const el = lock_padding[index];
-                        el.style.paddingRight = "0px";
-                    }
-                    PopupWrapper.forEach((e => e.style.paddingRight = "0px"));
-                    body.style.paddingRight = "0px";
-                    document.documentElement.classList.remove("lock");
-                }), delay);
-                bodyLockStatus = false;
-                setTimeout((function() {
-                    bodyLockStatus = true;
-                }), delay);
-            }
-        };
-        let bodyLock = (delay = 500) => {
-            let body = document.querySelector("body");
-            let PopupWrapper = document.querySelectorAll(".popup__wrapper");
-            if (bodyLockStatus) {
-                let lock_padding = document.querySelectorAll("[data-lp]");
-                for (let index = 0; index < lock_padding.length; index++) {
-                    const el = lock_padding[index];
-                    el.style.paddingRight = window.innerWidth - document.querySelector(".wrapper").offsetWidth + "px";
-                }
-                PopupWrapper.forEach((e => e.style.paddingRight = window.innerWidth - document.querySelector(".wrapper").offsetWidth + "px"));
-                body.style.paddingRight = window.innerWidth - document.querySelector(".wrapper").offsetWidth + "px";
-                document.documentElement.classList.add("lock");
-                bodyLockStatus = false;
-                setTimeout((function() {
-                    bodyLockStatus = true;
-                }), delay);
-            }
-        };
-        function menuInit() {
-            const iconOpen = document.querySelector(".icon-open");
-            const iconClose = document.querySelector(".icon-close");
-            if (iconOpen && iconClose) document.addEventListener("click", (function(e) {
-                if (bodyLockStatus && e.target.closest(".icon-open")) menuOpen(); else if (bodyLockStatus && e.target.closest(".icon-close")) menuClose();
-            }));
-        }
-        function menuOpen() {
-            bodyLock();
-            document.documentElement.classList.add("menu-open");
-        }
-        function menuClose() {
-            bodyUnlock();
-            document.documentElement.classList.remove("menu-open");
-        }
-        function functions_FLS(message) {
-            setTimeout((() => {
-                if (window.FLS) console.log(message);
-            }), 0);
-        }
-        class Popup {
-            constructor(options) {
-                let config = {
-                    logging: true,
-                    init: true,
-                    attributeOpenButton: "data-popup",
-                    attributeCloseButton: "data-close",
-                    fixElementSelector: "[data-lp]",
-                    youtubeAttribute: "data-popup-youtube",
-                    youtubePlaceAttribute: "data-popup-youtube-place",
-                    setAutoplayYoutube: true,
-                    classes: {
-                        popup: "popup",
-                        popupContent: "popup__content",
-                        popupActive: "popup_show",
-                        bodyActive: "popup-show"
-                    },
-                    focusCatch: true,
-                    closeEsc: true,
-                    bodyLock: true,
-                    hashSettings: {
-                        location: true,
-                        goHash: true
-                    },
-                    on: {
-                        beforeOpen: function() {},
-                        afterOpen: function() {},
-                        beforeClose: function() {},
-                        afterClose: function() {}
-                    }
-                };
-                this.youTubeCode;
-                this.isOpen = false;
-                this.targetOpen = {
-                    selector: false,
-                    element: false
-                };
-                this.previousOpen = {
-                    selector: false,
-                    element: false
-                };
-                this.lastClosed = {
-                    selector: false,
-                    element: false
-                };
-                this._dataValue = false;
-                this.hash = false;
-                this._reopen = false;
-                this._selectorOpen = false;
-                this.lastFocusEl = false;
-                this._focusEl = [ "a[href]", 'input:not([disabled]):not([type="hidden"]):not([aria-hidden])', "button:not([disabled]):not([aria-hidden])", "select:not([disabled]):not([aria-hidden])", "textarea:not([disabled]):not([aria-hidden])", "area[href]", "iframe", "object", "embed", "[contenteditable]", '[tabindex]:not([tabindex^="-"])' ];
-                this.options = {
-                    ...config,
-                    ...options,
-                    classes: {
-                        ...config.classes,
-                        ...options?.classes
-                    },
-                    hashSettings: {
-                        ...config.hashSettings,
-                        ...options?.hashSettings
-                    },
-                    on: {
-                        ...config.on,
-                        ...options?.on
-                    }
-                };
-                this.bodyLock = false;
-                this.options.init ? this.initPopups() : null;
-            }
-            initPopups() {
-                this.popupLogging(`Проснулся`);
-                this.eventsPopup();
-            }
-            eventsPopup() {
-                document.addEventListener("click", function(e) {
-                    const buttonOpen = e.target.closest(`[${this.options.attributeOpenButton}]`);
-                    if (buttonOpen) {
-                        e.preventDefault();
-                        this._dataValue = buttonOpen.getAttribute(this.options.attributeOpenButton) ? buttonOpen.getAttribute(this.options.attributeOpenButton) : "error";
-                        this.youTubeCode = buttonOpen.getAttribute(this.options.youtubeAttribute) ? buttonOpen.getAttribute(this.options.youtubeAttribute) : null;
-                        if (this._dataValue !== "error") {
-                            if (!this.isOpen) this.lastFocusEl = buttonOpen;
-                            this.targetOpen.selector = `${this._dataValue}`;
-                            this._selectorOpen = true;
-                            this.open();
-                            return;
-                        } else this.popupLogging(`Ой ой, не заполнен атрибут у ${buttonOpen.classList}`);
-                        return;
-                    }
-                    const buttonClose = e.target.closest(`[${this.options.attributeCloseButton}]`);
-                    if (buttonClose || !e.target.closest(`.${this.options.classes.popupContent}`) && this.isOpen) {
-                        e.preventDefault();
-                        this.close();
-                        return;
-                    }
-                }.bind(this));
-                document.addEventListener("keydown", function(e) {
-                    if (this.options.closeEsc && e.which == 27 && e.code === "Escape" && this.isOpen) {
-                        e.preventDefault();
-                        this.close();
-                        return;
-                    }
-                    if (this.options.focusCatch && e.which == 9 && this.isOpen) {
-                        this._focusCatch(e);
-                        return;
-                    }
-                }.bind(this));
-                if (this.options.hashSettings.goHash) {
-                    window.addEventListener("hashchange", function() {
-                        if (window.location.hash) this._openToHash(); else this.close(this.targetOpen.selector);
-                    }.bind(this));
-                    window.addEventListener("load", function() {
-                        if (window.location.hash) this._openToHash();
-                    }.bind(this));
-                }
-            }
-            open(selectorValue) {
-                if (bodyLockStatus) {
-                    this.bodyLock = document.documentElement.classList.contains("lock") ? true : false;
-                    if (selectorValue && typeof selectorValue === "string" && selectorValue.trim() !== "") {
-                        this.targetOpen.selector = selectorValue;
-                        this._selectorOpen = true;
-                    }
-                    if (this.isOpen) {
-                        this._reopen = true;
-                        this.close();
-                    }
-                    if (!this._selectorOpen) this.targetOpen.selector = this.lastClosed.selector;
-                    if (!this._reopen) this.previousActiveElement = document.activeElement;
-                    this.targetOpen.element = document.querySelector(this.targetOpen.selector);
-                    if (this.targetOpen.element) {
-                        if (this.youTubeCode) {
-                            const codeVideo = this.youTubeCode;
-                            const urlVideo = `https://www.youtube.com/embed/${codeVideo}?rel=0&showinfo=0&autoplay=1`;
-                            const iframe = document.createElement("iframe");
-                            iframe.setAttribute("allowfullscreen", "");
-                            const autoplay = this.options.setAutoplayYoutube ? "autoplay;" : "";
-                            iframe.setAttribute("allow", `${autoplay}; encrypted-media`);
-                            iframe.setAttribute("src", urlVideo);
-                            if (!this.targetOpen.element.querySelector(`[${this.options.youtubePlaceAttribute}]`)) {
-                                this.targetOpen.element.querySelector(".popup__text").setAttribute(`${this.options.youtubePlaceAttribute}`, "");
-                            }
-                            this.targetOpen.element.querySelector(`[${this.options.youtubePlaceAttribute}]`).appendChild(iframe);
-                        }
-                        if (this.options.hashSettings.location) {
-                            this._getHash();
-                            this._setHash();
-                        }
-                        this.options.on.beforeOpen(this);
-                        document.dispatchEvent(new CustomEvent("beforePopupOpen", {
-                            detail: {
-                                popup: this
-                            }
-                        }));
-                        this.targetOpen.element.classList.add(this.options.classes.popupActive);
-                        document.documentElement.classList.add(this.options.classes.bodyActive);
-                        if (!this._reopen) !this.bodyLock ? bodyLock() : null; else this._reopen = false;
-                        this.targetOpen.element.setAttribute("aria-hidden", "false");
-                        this.previousOpen.selector = this.targetOpen.selector;
-                        this.previousOpen.element = this.targetOpen.element;
-                        this._selectorOpen = false;
-                        this.isOpen = true;
-                        setTimeout((() => {
-                            this._focusTrap();
-                        }), 50);
-                        this.options.on.afterOpen(this);
-                        document.dispatchEvent(new CustomEvent("afterPopupOpen", {
-                            detail: {
-                                popup: this
-                            }
-                        }));
-                        this.popupLogging(`Открыл попап`);
-                    } else this.popupLogging(`Ой ой, такого попапа нет.Проверьте корректность ввода. `);
-                }
-            }
-            close(selectorValue) {
-                if (selectorValue && typeof selectorValue === "string" && selectorValue.trim() !== "") this.previousOpen.selector = selectorValue;
-                if (!this.isOpen || !bodyLockStatus) return;
-                this.options.on.beforeClose(this);
-                document.dispatchEvent(new CustomEvent("beforePopupClose", {
-                    detail: {
-                        popup: this
-                    }
-                }));
-                if (this.youTubeCode) if (this.targetOpen.element.querySelector(`[${this.options.youtubePlaceAttribute}]`)) this.targetOpen.element.querySelector(`[${this.options.youtubePlaceAttribute}]`).innerHTML = "";
-                this.previousOpen.element.classList.remove(this.options.classes.popupActive);
-                this.previousOpen.element.setAttribute("aria-hidden", "true");
-                if (!this._reopen) {
-                    document.documentElement.classList.remove(this.options.classes.bodyActive);
-                    !this.bodyLock ? bodyUnlock() : null;
-                    this.isOpen = false;
-                }
-                this._removeHash();
-                if (this._selectorOpen) {
-                    this.lastClosed.selector = this.previousOpen.selector;
-                    this.lastClosed.element = this.previousOpen.element;
-                }
-                this.options.on.afterClose(this);
-                document.dispatchEvent(new CustomEvent("afterPopupClose", {
-                    detail: {
-                        popup: this
-                    }
-                }));
-                setTimeout((() => {
-                    this._focusTrap();
-                }), 50);
-                this.popupLogging(`Закрыл попап`);
-            }
-            _getHash() {
-                if (this.options.hashSettings.location) this.hash = this.targetOpen.selector.includes("#") ? this.targetOpen.selector : this.targetOpen.selector.replace(".", "#");
-            }
-            _openToHash() {
-                let classInHash = document.querySelector(`.${window.location.hash.replace("#", "")}`) ? `.${window.location.hash.replace("#", "")}` : document.querySelector(`${window.location.hash}`) ? `${window.location.hash}` : null;
-                const buttons = document.querySelector(`[${this.options.attributeOpenButton} = "${classInHash}"]`) ? document.querySelector(`[${this.options.attributeOpenButton} = "${classInHash}"]`) : document.querySelector(`[${this.options.attributeOpenButton} = "${classInHash.replace(".", "#")}"]`);
-                if (buttons && classInHash) this.open(classInHash);
-            }
-            _setHash() {
-                history.pushState("", "", this.hash);
-            }
-            _removeHash() {
-                history.pushState("", "", window.location.href.split("#")[0]);
-            }
-            _focusCatch(e) {
-                const focusable = this.targetOpen.element.querySelectorAll(this._focusEl);
-                const focusArray = Array.prototype.slice.call(focusable);
-                const focusedIndex = focusArray.indexOf(document.activeElement);
-                if (e.shiftKey && focusedIndex === 0) {
-                    focusArray[focusArray.length - 1].focus();
-                    e.preventDefault();
-                }
-                if (!e.shiftKey && focusedIndex === focusArray.length - 1) {
-                    focusArray[0].focus();
-                    e.preventDefault();
-                }
-            }
-            _focusTrap() {
-                const focusable = this.previousOpen.element.querySelectorAll(this._focusEl);
-                if (!this.isOpen && this.lastFocusEl) this.lastFocusEl.focus(); else focusable[0].focus();
-            }
-            popupLogging(message) {
-                this.options.logging ? functions_FLS(`[Попапос]: ${message}`) : null;
-            }
-        }
-        modules_flsModules.popup = new Popup({});
-        let gotoblock_gotoBlock = (targetBlock, noHeader = false, speed = 500, offsetTop = 0) => {
-            const targetBlockElement = document.querySelector(targetBlock);
-            if (targetBlockElement) {
-                let headerItem = "";
-                let headerItemHeight = 0;
-                if (noHeader) {
-                    headerItem = "header.header";
-                    headerItemHeight = document.querySelector(headerItem).offsetHeight;
-                }
-                let options = {
-                    speedAsDuration: true,
-                    speed,
-                    header: headerItem,
-                    offset: offsetTop,
-                    easing: "easeOutQuad"
-                };
-                document.documentElement.classList.contains("menu-open") ? menuClose() : null;
-                const scrollToTarget = () => {
-                    const rect = targetBlockElement.getBoundingClientRect();
-                    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                    parseFloat(document.body.style.zoom);
-                    const targetBlockElementPosition = rect.top + scrollTop - (headerItemHeight + offsetTop);
-                    if (typeof SmoothScroll !== "undefined") (new SmoothScroll).animateScroll(targetBlockElement, "", options); else window.scrollTo({
-                        top: targetBlockElementPosition,
-                        behavior: "smooth"
-                    });
-                };
-                setTimeout(scrollToTarget, 50);
-            } else console.log(`[gotoBlockWithZoom]: Ой ой..Такого блока нет на странице: ${targetBlock}`);
-        };
-        __webpack_require__(125);
-        const inputMasks = document.querySelectorAll("input");
-        if (inputMasks.length) modules_flsModules.inputmask = Inputmask().mask(inputMasks);
         function ssr_window_esm_isObject(obj) {
             return obj !== null && typeof obj === "object" && "constructor" in obj && obj.constructor === Object;
         }
@@ -6546,7 +6172,7 @@
             el.classList.add(...classNames);
             swiper.emitContainerClasses();
         }
-        function swiper_core_removeClasses() {
+        function removeClasses() {
             const swiper = this;
             const {el, classNames} = swiper;
             if (!el || typeof el === "string") return;
@@ -6555,7 +6181,7 @@
         }
         var classes = {
             addClasses,
-            removeClasses: swiper_core_removeClasses
+            removeClasses
         };
         function checkOverflow() {
             const swiper = this;
@@ -8052,9 +7678,383 @@
                 }
             });
         }
-        window.addEventListener("load", (function(e) {
+        window.addEventListener("DOMContentLoaded", (function(e) {
             initSliders();
         }));
+        const modules_flsModules = {};
+        function isWebp() {
+            function testWebP(callback) {
+                let webP = new Image;
+                webP.onload = webP.onerror = function() {
+                    callback(webP.height == 2);
+                };
+                webP.src = "data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAACyAgCdASoCAAIALmk0mk0iIiIiIgBoSygABc6WWgAA/veff/0PP8bA//LwYAAA";
+            }
+            testWebP((function(support) {
+                let className = support === true ? "webp" : "no-webp";
+                document.documentElement.classList.add(className);
+            }));
+        }
+        let isMobile = {
+            Android: function() {
+                return navigator.userAgent.match(/Android/i);
+            },
+            BlackBerry: function() {
+                return navigator.userAgent.match(/BlackBerry/i);
+            },
+            iOS: function() {
+                return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+            },
+            Opera: function() {
+                return navigator.userAgent.match(/Opera Mini/i);
+            },
+            Windows: function() {
+                return navigator.userAgent.match(/IEMobile/i);
+            },
+            any: function() {
+                return isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows();
+            }
+        };
+        function getHash() {
+            if (location.hash) return location.hash.replace("#", "");
+        }
+        let bodyLockStatus = true;
+        let bodyUnlock = (delay = 500) => {
+            let body = document.querySelector("body");
+            let PopupWrapper = document.querySelectorAll(".popup__wrapper");
+            if (bodyLockStatus) {
+                let lock_padding = document.querySelectorAll("[data-lp]");
+                setTimeout((() => {
+                    for (let index = 0; index < lock_padding.length; index++) {
+                        const el = lock_padding[index];
+                        el.style.paddingRight = "0px";
+                    }
+                    PopupWrapper.forEach((e => e.style.paddingRight = "0px"));
+                    body.style.paddingRight = "0px";
+                    document.documentElement.classList.remove("lock");
+                }), delay);
+                bodyLockStatus = false;
+                setTimeout((function() {
+                    bodyLockStatus = true;
+                }), delay);
+            }
+        };
+        let bodyLock = (delay = 500) => {
+            let body = document.querySelector("body");
+            let PopupWrapper = document.querySelectorAll(".popup__wrapper");
+            if (bodyLockStatus) {
+                let lock_padding = document.querySelectorAll("[data-lp]");
+                for (let index = 0; index < lock_padding.length; index++) {
+                    const el = lock_padding[index];
+                    el.style.paddingRight = window.innerWidth - document.querySelector(".wrapper").offsetWidth + "px";
+                }
+                PopupWrapper.forEach((e => e.style.paddingRight = window.innerWidth - document.querySelector(".wrapper").offsetWidth + "px"));
+                body.style.paddingRight = window.innerWidth - document.querySelector(".wrapper").offsetWidth + "px";
+                document.documentElement.classList.add("lock");
+                bodyLockStatus = false;
+                setTimeout((function() {
+                    bodyLockStatus = true;
+                }), delay);
+            }
+        };
+        function menuInit() {
+            const iconOpen = document.querySelector(".icon-open");
+            const iconClose = document.querySelector(".icon-close");
+            if (iconOpen && iconClose) document.addEventListener("click", (function(e) {
+                if (bodyLockStatus && e.target.closest(".icon-open")) menuOpen(); else if (bodyLockStatus && e.target.closest(".icon-close")) menuClose();
+            }));
+        }
+        function menuOpen() {
+            bodyLock();
+            document.documentElement.classList.add("menu-open");
+        }
+        function menuClose() {
+            bodyUnlock();
+            document.documentElement.classList.remove("menu-open");
+        }
+        function functions_FLS(message) {
+            setTimeout((() => {
+                if (window.FLS) console.log(message);
+            }), 0);
+        }
+        class Popup {
+            constructor(options) {
+                let config = {
+                    logging: true,
+                    init: true,
+                    attributeOpenButton: "data-popup",
+                    attributeCloseButton: "data-close",
+                    fixElementSelector: "[data-lp]",
+                    youtubeAttribute: "data-popup-youtube",
+                    youtubePlaceAttribute: "data-popup-youtube-place",
+                    setAutoplayYoutube: true,
+                    classes: {
+                        popup: "popup",
+                        popupContent: "popup__content",
+                        popupActive: "popup_show",
+                        bodyActive: "popup-show"
+                    },
+                    focusCatch: true,
+                    closeEsc: true,
+                    bodyLock: true,
+                    hashSettings: {
+                        location: true,
+                        goHash: true
+                    },
+                    on: {
+                        beforeOpen: function() {},
+                        afterOpen: function() {},
+                        beforeClose: function() {},
+                        afterClose: function() {}
+                    }
+                };
+                this.youTubeCode;
+                this.isOpen = false;
+                this.targetOpen = {
+                    selector: false,
+                    element: false
+                };
+                this.previousOpen = {
+                    selector: false,
+                    element: false
+                };
+                this.lastClosed = {
+                    selector: false,
+                    element: false
+                };
+                this._dataValue = false;
+                this.hash = false;
+                this._reopen = false;
+                this._selectorOpen = false;
+                this.lastFocusEl = false;
+                this._focusEl = [ "a[href]", 'input:not([disabled]):not([type="hidden"]):not([aria-hidden])', "button:not([disabled]):not([aria-hidden])", "select:not([disabled]):not([aria-hidden])", "textarea:not([disabled]):not([aria-hidden])", "area[href]", "iframe", "object", "embed", "[contenteditable]", '[tabindex]:not([tabindex^="-"])' ];
+                this.options = {
+                    ...config,
+                    ...options,
+                    classes: {
+                        ...config.classes,
+                        ...options?.classes
+                    },
+                    hashSettings: {
+                        ...config.hashSettings,
+                        ...options?.hashSettings
+                    },
+                    on: {
+                        ...config.on,
+                        ...options?.on
+                    }
+                };
+                this.bodyLock = false;
+                this.options.init ? this.initPopups() : null;
+            }
+            initPopups() {
+                this.popupLogging(`Проснулся`);
+                this.eventsPopup();
+            }
+            eventsPopup() {
+                document.addEventListener("click", function(e) {
+                    const buttonOpen = e.target.closest(`[${this.options.attributeOpenButton}]`);
+                    if (buttonOpen) {
+                        e.preventDefault();
+                        this._dataValue = buttonOpen.getAttribute(this.options.attributeOpenButton) ? buttonOpen.getAttribute(this.options.attributeOpenButton) : "error";
+                        this.youTubeCode = buttonOpen.getAttribute(this.options.youtubeAttribute) ? buttonOpen.getAttribute(this.options.youtubeAttribute) : null;
+                        if (this._dataValue !== "error") {
+                            if (!this.isOpen) this.lastFocusEl = buttonOpen;
+                            this.targetOpen.selector = `${this._dataValue}`;
+                            this._selectorOpen = true;
+                            this.open();
+                            return;
+                        } else this.popupLogging(`Ой ой, не заполнен атрибут у ${buttonOpen.classList}`);
+                        return;
+                    }
+                    const buttonClose = e.target.closest(`[${this.options.attributeCloseButton}]`);
+                    if (buttonClose || !e.target.closest(`.${this.options.classes.popupContent}`) && this.isOpen) {
+                        e.preventDefault();
+                        this.close();
+                        return;
+                    }
+                }.bind(this));
+                document.addEventListener("keydown", function(e) {
+                    if (this.options.closeEsc && e.which == 27 && e.code === "Escape" && this.isOpen) {
+                        e.preventDefault();
+                        this.close();
+                        return;
+                    }
+                    if (this.options.focusCatch && e.which == 9 && this.isOpen) {
+                        this._focusCatch(e);
+                        return;
+                    }
+                }.bind(this));
+                if (this.options.hashSettings.goHash) {
+                    window.addEventListener("hashchange", function() {
+                        if (window.location.hash) this._openToHash(); else this.close(this.targetOpen.selector);
+                    }.bind(this));
+                    window.addEventListener("load", function() {
+                        if (window.location.hash) this._openToHash();
+                    }.bind(this));
+                }
+            }
+            open(selectorValue) {
+                if (bodyLockStatus) {
+                    this.bodyLock = document.documentElement.classList.contains("lock") ? true : false;
+                    if (selectorValue && typeof selectorValue === "string" && selectorValue.trim() !== "") {
+                        this.targetOpen.selector = selectorValue;
+                        this._selectorOpen = true;
+                    }
+                    if (this.isOpen) {
+                        this._reopen = true;
+                        this.close();
+                    }
+                    if (!this._selectorOpen) this.targetOpen.selector = this.lastClosed.selector;
+                    if (!this._reopen) this.previousActiveElement = document.activeElement;
+                    this.targetOpen.element = document.querySelector(this.targetOpen.selector);
+                    if (this.targetOpen.element) {
+                        if (this.youTubeCode) {
+                            const codeVideo = this.youTubeCode;
+                            const urlVideo = `https://www.youtube.com/embed/${codeVideo}?rel=0&showinfo=0&autoplay=1`;
+                            const iframe = document.createElement("iframe");
+                            iframe.setAttribute("allowfullscreen", "");
+                            const autoplay = this.options.setAutoplayYoutube ? "autoplay;" : "";
+                            iframe.setAttribute("allow", `${autoplay}; encrypted-media`);
+                            iframe.setAttribute("src", urlVideo);
+                            if (!this.targetOpen.element.querySelector(`[${this.options.youtubePlaceAttribute}]`)) {
+                                this.targetOpen.element.querySelector(".popup__text").setAttribute(`${this.options.youtubePlaceAttribute}`, "");
+                            }
+                            this.targetOpen.element.querySelector(`[${this.options.youtubePlaceAttribute}]`).appendChild(iframe);
+                        }
+                        if (this.options.hashSettings.location) {
+                            this._getHash();
+                            this._setHash();
+                        }
+                        this.options.on.beforeOpen(this);
+                        document.dispatchEvent(new CustomEvent("beforePopupOpen", {
+                            detail: {
+                                popup: this
+                            }
+                        }));
+                        this.targetOpen.element.classList.add(this.options.classes.popupActive);
+                        document.documentElement.classList.add(this.options.classes.bodyActive);
+                        if (!this._reopen) !this.bodyLock ? bodyLock() : null; else this._reopen = false;
+                        this.targetOpen.element.setAttribute("aria-hidden", "false");
+                        this.previousOpen.selector = this.targetOpen.selector;
+                        this.previousOpen.element = this.targetOpen.element;
+                        this._selectorOpen = false;
+                        this.isOpen = true;
+                        setTimeout((() => {
+                            this._focusTrap();
+                        }), 50);
+                        this.options.on.afterOpen(this);
+                        document.dispatchEvent(new CustomEvent("afterPopupOpen", {
+                            detail: {
+                                popup: this
+                            }
+                        }));
+                        this.popupLogging(`Открыл попап`);
+                    } else this.popupLogging(`Ой ой, такого попапа нет.Проверьте корректность ввода. `);
+                }
+            }
+            close(selectorValue) {
+                if (selectorValue && typeof selectorValue === "string" && selectorValue.trim() !== "") this.previousOpen.selector = selectorValue;
+                if (!this.isOpen || !bodyLockStatus) return;
+                this.options.on.beforeClose(this);
+                document.dispatchEvent(new CustomEvent("beforePopupClose", {
+                    detail: {
+                        popup: this
+                    }
+                }));
+                if (this.youTubeCode) if (this.targetOpen.element.querySelector(`[${this.options.youtubePlaceAttribute}]`)) this.targetOpen.element.querySelector(`[${this.options.youtubePlaceAttribute}]`).innerHTML = "";
+                this.previousOpen.element.classList.remove(this.options.classes.popupActive);
+                this.previousOpen.element.setAttribute("aria-hidden", "true");
+                if (!this._reopen) {
+                    document.documentElement.classList.remove(this.options.classes.bodyActive);
+                    !this.bodyLock ? bodyUnlock() : null;
+                    this.isOpen = false;
+                }
+                this._removeHash();
+                if (this._selectorOpen) {
+                    this.lastClosed.selector = this.previousOpen.selector;
+                    this.lastClosed.element = this.previousOpen.element;
+                }
+                this.options.on.afterClose(this);
+                document.dispatchEvent(new CustomEvent("afterPopupClose", {
+                    detail: {
+                        popup: this
+                    }
+                }));
+                setTimeout((() => {
+                    this._focusTrap();
+                }), 50);
+                this.popupLogging(`Закрыл попап`);
+            }
+            _getHash() {
+                if (this.options.hashSettings.location) this.hash = this.targetOpen.selector.includes("#") ? this.targetOpen.selector : this.targetOpen.selector.replace(".", "#");
+            }
+            _openToHash() {
+                let classInHash = document.querySelector(`.${window.location.hash.replace("#", "")}`) ? `.${window.location.hash.replace("#", "")}` : document.querySelector(`${window.location.hash}`) ? `${window.location.hash}` : null;
+                const buttons = document.querySelector(`[${this.options.attributeOpenButton} = "${classInHash}"]`) ? document.querySelector(`[${this.options.attributeOpenButton} = "${classInHash}"]`) : document.querySelector(`[${this.options.attributeOpenButton} = "${classInHash.replace(".", "#")}"]`);
+                if (buttons && classInHash) this.open(classInHash);
+            }
+            _setHash() {
+                history.pushState("", "", this.hash);
+            }
+            _removeHash() {
+                history.pushState("", "", window.location.href.split("#")[0]);
+            }
+            _focusCatch(e) {
+                const focusable = this.targetOpen.element.querySelectorAll(this._focusEl);
+                const focusArray = Array.prototype.slice.call(focusable);
+                const focusedIndex = focusArray.indexOf(document.activeElement);
+                if (e.shiftKey && focusedIndex === 0) {
+                    focusArray[focusArray.length - 1].focus();
+                    e.preventDefault();
+                }
+                if (!e.shiftKey && focusedIndex === focusArray.length - 1) {
+                    focusArray[0].focus();
+                    e.preventDefault();
+                }
+            }
+            _focusTrap() {
+                const focusable = this.previousOpen.element.querySelectorAll(this._focusEl);
+                if (!this.isOpen && this.lastFocusEl) this.lastFocusEl.focus(); else focusable[0].focus();
+            }
+            popupLogging(message) {
+                this.options.logging ? functions_FLS(`[Попапос]: ${message}`) : null;
+            }
+        }
+        modules_flsModules.popup = new Popup({});
+        let gotoblock_gotoBlock = (targetBlock, noHeader = false, speed = 500, offsetTop = 0) => {
+            const targetBlockElement = document.querySelector(targetBlock);
+            if (targetBlockElement) {
+                let headerItem = "";
+                let headerItemHeight = 0;
+                if (noHeader) {
+                    headerItem = "header.header";
+                    headerItemHeight = document.querySelector(headerItem).offsetHeight;
+                }
+                let options = {
+                    speedAsDuration: true,
+                    speed,
+                    header: headerItem,
+                    offset: offsetTop,
+                    easing: "easeOutQuad"
+                };
+                document.documentElement.classList.contains("menu-open") ? menuClose() : null;
+                const scrollToTarget = () => {
+                    const rect = targetBlockElement.getBoundingClientRect();
+                    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                    parseFloat(document.body.style.zoom);
+                    const targetBlockElementPosition = rect.top + scrollTop - (headerItemHeight + offsetTop);
+                    if (typeof SmoothScroll !== "undefined") (new SmoothScroll).animateScroll(targetBlockElement, "", options); else window.scrollTo({
+                        top: targetBlockElementPosition,
+                        behavior: "smooth"
+                    });
+                };
+                setTimeout(scrollToTarget, 50);
+            } else console.log(`[gotoBlockWithZoom]: Ой ой..Такого блока нет на странице: ${targetBlock}`);
+        };
+        __webpack_require__(125);
+        const inputMasks = document.querySelectorAll("input");
+        if (inputMasks.length) modules_flsModules.inputmask = Inputmask().mask(inputMasks);
         let addWindowScrollEvent = false;
         function pageNavigation() {
             document.addEventListener("click", pageNavigationAction);
@@ -8244,26 +8244,120 @@
                 img.style.transition = `${property} ${duration} ${timingFunction} ${delay}`;
             }));
         }
-        function handleIntersect(entries, observer) {
+        function handleIntersectAdd(entries, observer) {
             entries.forEach((entry => {
                 const target = entry.target;
-                if (entry.isIntersecting) {
-                    if (!target.classList.contains("anim")) {
-                        target.classList.add("anim");
-                        addTransitionToParentAndImg(target, "transform", "1s", "ease", "0s");
-                    }
-                } else if (target.classList.contains("anim")) target.classList.remove("anim");
+                if (entry.isIntersecting) if (!target.classList.contains("anim")) {
+                    target.classList.add("anim");
+                    addTransitionToParentAndImg(target, "transform", "1s", "ease", "0s");
+                }
+            }));
+        }
+        function handleIntersectRemove(entries, observer) {
+            entries.forEach((entry => {
+                const target = entry.target;
+                if (!entry.isIntersecting) if (target.classList.contains("anim")) target.classList.remove("anim");
             }));
         }
         let animatedImages = document.querySelectorAll('[id^="animatedImage"]');
         setTimeout((() => {
             animatedImages.forEach((target => {
-                let observer = new IntersectionObserver(handleIntersect, {
-                    threshold: .3
+                let observerAdd = new IntersectionObserver(handleIntersectAdd, {
+                    threshold: .75
                 });
-                observer.observe(target);
+                observerAdd.observe(target);
+                let observerRemove = new IntersectionObserver(handleIntersectRemove, {
+                    threshold: .2
+                });
+                observerRemove.observe(target);
             }));
         }), 500);
+        document.addEventListener("DOMContentLoaded", (function() {
+            function shuffleArray(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [ array[j], array[i] ];
+                }
+                return array;
+            }
+            const placeholders = document.querySelectorAll(".js-dynamic-image");
+            const allImages = [];
+            document.querySelectorAll(".types__img img, .gallery__photo img").forEach((img => {
+                const src = img.getAttribute("data-src") || img.getAttribute("srcset");
+                if (src) allImages.push({
+                    url: src,
+                    alt: img.getAttribute("alt") || ""
+                });
+            }));
+            if (allImages.length === 0) placeholders.forEach((placeholder => {
+                placeholder.remove();
+            })); else {
+                const shuffledImages = shuffleArray(allImages);
+                placeholders.forEach(((placeholder, index) => {
+                    if (shuffledImages[index]) {
+                        const img = document.createElement("img");
+                        img.src = shuffledImages[index].url;
+                        img.alt = shuffledImages[index].alt;
+                        img.classList.add("no-lazy");
+                        placeholder.appendChild(img);
+                        placeholder.classList.remove("js-dynamic-image");
+                    }
+                }));
+            }
+        }));
+        document.addEventListener("DOMContentLoaded", (function() {
+            function drawPlayButton(context, width, height) {
+                const radius = Math.min(width, height) / 8;
+                const centerX = width / 2;
+                const centerY = height / 2;
+                context.fillStyle = "rgba(0, 0, 0, 0.5)";
+                context.beginPath();
+                context.arc(centerX, centerY, radius, 0, Math.PI * 2);
+                context.fill();
+                context.fillStyle = "white";
+                context.beginPath();
+                context.moveTo(centerX - radius / 6, centerY - radius / 3);
+                context.lineTo(centerX + radius / 3, centerY);
+                context.lineTo(centerX - radius / 6, centerY + radius / 3);
+                context.closePath();
+                context.fill();
+            }
+            function captureVideoPoster(video, canvas) {
+                const context = canvas.getContext("2d");
+                video.addEventListener("loadedmetadata", (function() {
+                    canvas.width = video.videoWidth;
+                    canvas.height = video.videoHeight;
+                    video.currentTime = 0;
+                    video.addEventListener("seeked", (function() {
+                        context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
+                        drawPlayButton(context, canvas.width, canvas.height);
+                        video.currentTime = 0;
+                        video.pause();
+                    }), {
+                        once: true
+                    });
+                }), {
+                    once: true
+                });
+                video.load();
+            }
+            function setupVideoPosters() {
+                const videoContainers = document.querySelectorAll(".gallery__video");
+                videoContainers.forEach((container => {
+                    const video = container.querySelector("video");
+                    const canvas = container.querySelector(".gallery__video-poster");
+                    if (canvas) {
+                        captureVideoPoster(video, canvas);
+                        canvas.addEventListener("click", (() => {
+                            canvas.style.display = "none";
+                            video.style.display = "block";
+                            video.play();
+                        }));
+                    } else video.style.display = "block";
+                }));
+            }
+            setupVideoPosters();
+        }));
         var phones = document.querySelectorAll(".phone");
         if (phones) {
             var maskOptions = {
@@ -8293,35 +8387,9 @@
             moveSubMenuItems();
         }));
         document.addEventListener("DOMContentLoaded", (function() {
-            const menuList = document.querySelector(".menu__list");
-            const homeLink = document.createElement("li");
-            homeLink.classList.add("menu__item");
-            homeLink.innerHTML = '<a href="#" class="menu__link">Главная</a>';
-            function addHomeLink() {
-                const windowWidth = window.innerWidth;
-                if (windowWidth <= 960) {
-                    if (!menuList.querySelector(".menu__item.home-link")) {
-                        homeLink.classList.add("home-link");
-                        menuList.insertBefore(homeLink, menuList.firstChild);
-                    }
-                } else if (menuList.querySelector(".menu__item.home-link")) menuList.removeChild(homeLink);
-            }
-            window.addEventListener("resize", addHomeLink);
-            addHomeLink();
-        }));
-        document.addEventListener("DOMContentLoaded", (function() {
             const reviewLinks = document.querySelectorAll(".review-list__link");
             reviewLinks.forEach((function(link) {
                 if (!link.textContent.trim() && !link.children.length) link.style.display = "none";
-            }));
-        }));
-        document.addEventListener("DOMContentLoaded", (function() {
-            const userImages = document.querySelectorAll(".user__img img");
-            userImages.forEach((img => {
-                img.addEventListener("error", (function() {
-                    img.parentElement.classList.add("empty");
-                }));
-                if (!img.complete || img.naturalWidth === 0) img.parentElement.classList.add("empty");
             }));
         }));
         window.addEventListener("load", (function() {
@@ -8360,13 +8428,16 @@
             if (window.location.hash === "#more-review") window.history.replaceState(null, null, window.location.pathname);
         }));
         document.addEventListener("DOMContentLoaded", (function() {
-            const highlightedWord = document.querySelector("._sizeChanger");
-            if (highlightedWord) {
+            const highlightedWords = document.querySelectorAll("._sizeChanger");
+            highlightedWords.forEach((highlightedWord => {
                 const wordLength = highlightedWord.textContent.trim().length;
-                const shortSVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 153.00021362304688 5" fill="none"><path d="M0.5001306982960421 0.5000331981599098C33.31979652200337 9.852288756032708 74.12560349617753 -0.25783535999672086 108.98265216453403 0.70565348525253C122.82517149183487 1.0882765194811854 125.65442544211594 2.7075287803250982 139.50144477569978 2.233618118638182C140.92094675764696 2.185045550819846 150.69896040997475 1.508034605558807 152.50021292493236 0.5000006981145323" stroke="#866154" stroke-linecap="round"></path></svg>';
-                const longSVG = '<svg xmlns="http://www.w3.org/2000/svg" width="372" height="8" viewBox="0 0 372 8" fill="none"><path d="M1 1.00005C80.8902 15.0284 180.22 -0.136751 265.069 1.30848C298.765 1.88241 305.652 4.31128 339.359 3.60043C342.814 3.52757 366.615 2.51205 371 1" stroke="#866154" stroke-linecap="round"></path></svg>';
+                const parentElement = highlightedWord.closest("h1");
+                let strokeColor = "#866154";
+                if (parentElement && parentElement.classList.contains("first__title-left")) strokeColor = "#fbfbfb";
+                const shortSVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 153.00021362304688 5" fill="none"><path d="M0.5001306982960421 0.5000331981599098C33.31979652200337 9.852288756032708 74.12560349617753 -0.25783535999672086 108.98265216453403 0.70565348525253C122.82517149183487 1.0882765194811854 125.65442544211594 2.7075287803250982 139.50144477569978 2.233618118638182C140.92094675764696 2.185045550819846 150.69896040997475 1.508034605558807 152.50021292493236 0.5000006981145323" stroke="${strokeColor}" stroke-linecap="round"></path></svg>`;
+                const longSVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 372 8" fill="none"><path d="M1 1.00005C80.8902 15.0284 180.22 -0.136751 265.069 1.30848C298.765 1.88241 305.652 4.31128 339.359 3.60043C342.814 3.52757 366.615 2.51205 371 1" stroke="${strokeColor}" stroke-linecap="round"></path></svg>`;
                 highlightedWord.innerHTML += wordLength > 6 ? longSVG : shortSVG;
-            }
+            }));
         }));
         document.addEventListener("DOMContentLoaded", (function() {
             const tooltipButtons = document.querySelectorAll(".tooltip-button");
@@ -8406,7 +8477,7 @@
             const forms = document.querySelectorAll("form");
             forms.forEach((form => {
                 const nameInput = form.querySelector('input[type="text"]');
-                const phoneInput = form.querySelector('input[type="tel"]');
+                const phoneInput = form.querySelector(".phone");
                 const agreementCheckbox = form.querySelector('input[type="checkbox"]');
                 const agreementCheckboxContainer = form.querySelector("#agreementCheckboxContainer");
                 const nameError = form.querySelector("#nameError");
@@ -8417,9 +8488,9 @@
                     phoneError.style.display = "none";
                     agreementError.style.display = "none";
                 }
-                nameInput.addEventListener("focus", removeAllErrors);
-                phoneInput.addEventListener("focus", removeAllErrors);
-                agreementCheckbox.addEventListener("change", removeAllErrors);
+                if (nameInput) nameInput.addEventListener("focus", removeAllErrors);
+                if (phoneInput) phoneInput.addEventListener("focus", removeAllErrors);
+                if (agreementCheckbox) agreementCheckbox.addEventListener("change", removeAllErrors);
                 form.addEventListener("submit", (function(event) {
                     event.preventDefault();
                     let isValid = true;
@@ -8455,21 +8526,39 @@
                         isValid = false;
                     } else agreementCheckboxContainer.classList.remove("error");
                     if (isValid) {
-                        if (form.classList.contains("contacts__form")) modules_flsModules.popup.open("#submit"); else if (form.classList.contains("request-popup__form")) form.innerHTML = '<p class="_success">Спасибо, ваша заявка отправлена. Я свяжусь с вами в ближайшее время для уточнения деталей</p>';
-                        const formData = new FormData(form);
-                        fetch(form.action, {
-                            method: "POST",
-                            body: formData
-                        }).then((response => {
-                            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                            return response.json();
-                        })).then((data => {
-                            console.log("Success:", data);
-                        })).catch((error => {
-                            console.error("Error:", error);
-                        }));
+                        sendMessage(form);
+                        async function sendMessage(form) {
+                            const formData = new FormData(form);
+                            if (formData) {
+                                const baseUri = form.getAttribute("data-uri");
+                                const url = baseUri + "/assets/js/sendmessage.php";
+                                try {
+                                    const response = await fetch(url, {
+                                        method: "POST",
+                                        body: formData
+                                    });
+                                    if (response.ok) {
+                                        form.reset();
+                                        if (form.classList.contains("contacts__form")) modules_flsModules.popup.open("#submit"); else if (form.classList.contains("request-popup__form")) form.innerHTML = '<p class="_success">Спасибо, ваша заявка отправлена. Я свяжусь с вами в ближайшее время для уточнения деталей</p>';
+                                    } else {
+                                        alert("Error");
+                                        console.error("Error:", response.statusText);
+                                    }
+                                } catch (error) {
+                                    alert("Error");
+                                    console.error("Error:", error);
+                                }
+                            }
+                        }
                     }
                 }));
+            }));
+        }));
+        document.addEventListener("DOMContentLoaded", (function() {
+            const userImages = document.querySelectorAll(".user__img");
+            userImages.forEach((container => {
+                const img = container.querySelector("img");
+                if (!img) container.classList.add("empty");
             }));
         }));
         document.addEventListener("DOMContentLoaded", (() => {
@@ -8519,6 +8608,7 @@
                 }
                 if (document.querySelector(".gallery")) page.addEventListener("click", (event => {
                     if (event.target.closest(".gallery__photo")) {
+                        if (event.target.closest(".gallery__like")) return;
                         if (zoomSlider.classList.contains("_active")) return;
                         const clickedPhoto = event.target.closest(".gallery__photo");
                         const gallery = clickedPhoto.closest(".gallery");
@@ -8529,12 +8619,17 @@
                             slide.className = "zoom-slider__slide swiper-slide";
                             const zoomContainer = document.createElement("div");
                             zoomContainer.className = "swiper-zoom-container";
-                            zoomContainer.innerHTML = photo.innerHTML;
+                            const img = photo.querySelector("img");
+                            zoomContainer.appendChild(img.cloneNode(true));
+                            const likeButton = photo.querySelector(".gallery__like");
                             slide.appendChild(zoomContainer);
+                            if (likeButton) slide.appendChild(likeButton.cloneNode(true));
                             if (photo === clickedPhoto) slide.dataset.initialSlide = index;
                             zoomWrapper.appendChild(slide);
                         }));
-                        if (typeof bodyLock === "function") bodyLock();
+                        const event1 = new Event("initializeLikeButtons");
+                        document.dispatchEvent(event1);
+                        if (typeof bodyLock === "function") bodyLock(0);
                         zoomSlider.classList.add("_active");
                         if (swiper) swiper.destroy();
                         swiper = new swiper_core_Swiper(".zoom-slider__slider", {
@@ -8560,15 +8655,14 @@
                             const scale = swiper.zoom.scale;
                             updateZoomButton(scale);
                         }));
-                        window.addEventListener("popstate", handlePopstate);
                         function handlePopstate(event) {
-                            event.preventDefault();
                             closeZoomSlider();
                             window.removeEventListener("popstate", handlePopstate);
                         }
                         history.pushState({
                             zoomActive: true
                         }, "");
+                        window.addEventListener("popstate", handlePopstate);
                     }
                 }));
                 zoomButton.addEventListener("click", (() => {
@@ -8587,7 +8681,7 @@
                 function closeZoomSlider() {
                     zoomSlider.classList.remove("_active");
                     zoomWrapper.innerHTML = "";
-                    if (typeof bodyUnlock === "function") bodyUnlock();
+                    bodyUnlock(0);
                     if (swiper) {
                         swiper.destroy();
                         swiper = null;
@@ -8599,7 +8693,6 @@
                 }
             }
         }));
-        window["FLS"] = false;
         isWebp();
         menuInit();
         pageNavigation();
