@@ -3056,7 +3056,7 @@ body::after {
 }
 
 .estate-ad {
-  padding: 6.25rem 0;
+  padding: 3.75rem 0;
 }
 
 .estate-ad__items {
@@ -3070,6 +3070,7 @@ body::after {
   text-align: center;
   margin-bottom: 2.5rem;
   font-size: 3rem;
+  padding: 0 1.25rem;
 }
 
 .estate-ad__name {
@@ -5361,6 +5362,10 @@ body::after {
     gap: 0.625rem;
   }
 
+  .estate-ad {
+    padding: 2.5rem 0;
+  }
+
   .estate-ad__title {
     font-size: 1.875rem;
   }
@@ -5407,6 +5412,14 @@ body::after {
 
   .estate-add__more {
     margin-top: 1.875rem;
+  }
+
+  .estate-add__first {
+    padding-top: 3.125rem;
+  }
+
+  .estate-add__last {
+    padding-bottom: 3.125rem;
   }
 
   .photos {
