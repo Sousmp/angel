@@ -8899,13 +8899,14 @@
             }
             const placeholders = document.querySelectorAll(".js-dynamic-image");
             const allImages = [];
-            document.querySelectorAll(".types__img img, .gallery__photo img").forEach((img => {
+            document.querySelectorAll(".types__img img, .gallery__photo img, .photos__slide img").forEach((img => {
                 const src = img.getAttribute("data-src") || img.getAttribute("srcset");
                 if (src) allImages.push({
                     url: src,
                     alt: img.getAttribute("alt") || ""
                 });
             }));
+            console.log(allImages);
             if (allImages.length === 0) placeholders.forEach((placeholder => {
                 placeholder.remove();
             })); else {
@@ -9039,39 +9040,41 @@
         window.addEventListener("load", (function() {
             const reviewsSlides = document.querySelectorAll(".reviews__slide");
             const popup = document.querySelector("#more-review");
-            const popupContent = popup.querySelector(".popup__content");
-            const closeButton = popup.querySelector("[data-close]");
-            reviewsSlides.forEach((slide => {
-                const reviewsUser = slide.querySelector(".reviews__user");
-                const userText = slide.querySelector(".user__text");
-                slide.querySelector(".user__text-container");
-                const userBlur = slide.querySelector(".user__blur");
-                if (reviewsUser) {
-                    const slideStyle = getComputedStyle(slide);
-                    const paddingTopSlide = parseFloat(slideStyle.paddingTop);
-                    const paddingBottomSlide = parseFloat(slideStyle.paddingBottom);
-                    const reviewsSlideHeightWithoutPadding = slide.clientHeight - paddingTopSlide - paddingBottomSlide;
-                    const reviewsUserHeight = reviewsUser.clientHeight;
-                    const userTextHeight = userText.clientHeight;
-                    const totalContentHeight = reviewsUserHeight + userTextHeight;
-                    if (totalContentHeight > reviewsSlideHeightWithoutPadding) {
-                        userBlur.classList.remove("hidden");
-                        slide.setAttribute("data-popup", "#more-review");
-                        slide.addEventListener("click", (function() {
-                            let firstChild = popupContent.firstChild;
-                            while (firstChild && !(firstChild.nodeType === 1 && firstChild.matches("[data-close]"))) {
-                                popupContent.removeChild(firstChild);
-                                firstChild = popupContent.firstChild;
-                            }
-                            const slideClone = slide.cloneNode(true);
-                            if (slideClone.hasAttribute("data-popup")) slideClone.removeAttribute("data-popup");
-                            slideClone.querySelector(".user__blur").classList.add("hidden");
-                            popupContent.insertBefore(slideClone, closeButton);
-                        }));
+            if (popup.querySelector(".popup__content")) {
+                const popupContent = popup.querySelector(".popup__content");
+                const closeButton = popup.querySelector("[data-close]");
+                reviewsSlides.forEach((slide => {
+                    const reviewsUser = slide.querySelector(".reviews__user");
+                    const userText = slide.querySelector(".user__text");
+                    slide.querySelector(".user__text-container");
+                    const userBlur = slide.querySelector(".user__blur");
+                    if (reviewsUser) {
+                        const slideStyle = getComputedStyle(slide);
+                        const paddingTopSlide = parseFloat(slideStyle.paddingTop);
+                        const paddingBottomSlide = parseFloat(slideStyle.paddingBottom);
+                        const reviewsSlideHeightWithoutPadding = slide.clientHeight - paddingTopSlide - paddingBottomSlide;
+                        const reviewsUserHeight = reviewsUser.clientHeight;
+                        const userTextHeight = userText.clientHeight;
+                        const totalContentHeight = reviewsUserHeight + userTextHeight;
+                        if (totalContentHeight > reviewsSlideHeightWithoutPadding) {
+                            userBlur.classList.remove("hidden");
+                            slide.setAttribute("data-popup", "#more-review");
+                            slide.addEventListener("click", (function() {
+                                let firstChild = popupContent.firstChild;
+                                while (firstChild && !(firstChild.nodeType === 1 && firstChild.matches("[data-close]"))) {
+                                    popupContent.removeChild(firstChild);
+                                    firstChild = popupContent.firstChild;
+                                }
+                                const slideClone = slide.cloneNode(true);
+                                if (slideClone.hasAttribute("data-popup")) slideClone.removeAttribute("data-popup");
+                                slideClone.querySelector(".user__blur").classList.add("hidden");
+                                popupContent.insertBefore(slideClone, closeButton);
+                            }));
+                        }
                     }
-                }
-            }));
-            if (window.location.hash === "#more-review") window.history.replaceState(null, null, window.location.pathname);
+                }));
+                if (window.location.hash === "#more-review") window.history.replaceState(null, null, window.location.pathname);
+            }
         }));
         document.addEventListener("DOMContentLoaded", (function() {
             const switches = document.querySelectorAll(".gallery__switch .switch__input");
