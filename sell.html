@@ -19,124 +19,334 @@
 			<div class="header__container">
 				<div class="header__logo">
 					<a href="home.html" class="page-link">
-						<picture><source srcset="img/logo.webp" type="image/webp"><img src="img/logo.png" alt="Image"></picture>
+						<picture><source srcset="img/logo1.webp" type="image/webp"><img src="img/logo1.png" alt="Image"></picture>
 					</a>
 				</div>
 				<ul class="header__list">
 					<li class="menu__item menu__submenu tooltip-button">
-						<a href="#" class="menu__link ">Портфолио</a>
+						<a href="#" class="menu__link ">Объекты</a>
 						<ul class="menu__sublist">
-							<li class="menu__item"><a href="#" class="menu__link page-link">Love-story</a></li>
-							<li class="menu__item"><a href="#" class="menu__link">Индивидуальный портрет</a></li>
-							<li class="menu__item"><a href="gallery.html" class="menu__link page-link">Фотосессия беременности</a></li>
-							<li class="menu__item"><a href="#" class="menu__link">Семейная фотосессия</a></li>
-							<li class="menu__item"><a href="#" class="menu__link">Свадебная фотосессия</a></li>
-							<li class="menu__item"><a href="#" class="menu__link">Интерьерная съемка</a></li>
-							<li class="menu__item"><a href="#" class="menu__link">Предметная съемка</a></li>
+							<li class="menu__item menu__link-home"><a href="#" class="menu__link">Главная</a></li>
+							<li class="menu__item"><a href="#" class="menu__link page-link">Продажа Недвижимости</a></li>
+							<li class="menu__item"><a href="#" class="menu__link">Аренда Недвижимости</a></li>
 						</ul>
 					</li>
-					<li class="menu__item"><a href="home.html#services" class="menu__link">Услуги</a></li>
-					<li class="menu__item"><a href="home.html#reviews" class="menu__link">Отзывы</a></li>
+					<li class="menu__item"><a href="home.html" class="menu__link">Фотосессия</a></li>
+					<li class="menu__item"><a href="#" data-goto-header data-goto="#reviews" class="menu__link">Отзывы</a></li>
 					<li class="menu__item"><a href="#" data-goto-header data-goto="#contacts" class="menu__link">Контакты</a></li>
 				</ul>
-				<button data-popup="#request" class="header__request">Заказать съемку</button>
+				<button data-popup="#request" class="header__request">Узнать больше</button>
 				<button class="menu__menu-icon icon-open"></button>
 			</div>
 		</header>
 		<main class="page">
-			<section class="review-list zoom">
-				<div class="review-list__container">
-					<h1 class="review-list__title _title">ТЕПЛЫЕ СЛОВА КЛИЕНТОВ, КОТОРЫЕ МНЕ
-						<span id="animatedImage" class="_underline _underline__bg-dark">ДОВЕРЯЮТ
-							<svg xmlns="http://www.w3.org/2000/svg" width="239" height="10" viewBox="0 0 239 10" fill="none">
-								<path d="M1 5.69483C16.7851 4.97276 32.4876 2.5003 48.2598 1.57268C57.3508 1.03801 67.05 0.685985 76.1451 1.4078C83.1559 1.96419 89.7158 4.35005 96.5209 5.69483C119.167 10.1699 144.858 9.03758 167.811 8.333C191.278 7.61266 214.496 6.43682 238 6.43682" stroke="#FBFBFB" stroke-linecap="round"></path>
-							</svg>
-						</span>
-					</h1>
-					<div class="review-list__items">
-						<div class="review-list__item">
-							<div class="review-list__text">
-								<p class="review-list__text-p">Невероятно красивые кадры✨ и исходники качественные, и обработка волшебная💫спасибо ❤️</p>
-								<p class="review-list__date">27.04.2024</p>
-							</div>
-							<div class="review-list__user">
-								<div class="review-list__img">
-									<picture><source srcset="img/reviews/2.webp" type="image/webp"><img src="img/reviews/2.jpg" alt="Image"></picture>
-								</div>
-								<div class="review-list__info">
-									<p class="review-list__name">Ангелина</p>
-									<a href="#" class="review-list__link">www.instagram.com/yogaangel</a>
-								</div>
-							</div>
-						</div>
-						<div class="review-list__item">
-							<div class="review-list__text">
-								<p class="review-list__text-p"> Спасибо большое за офигенные фотографии🔥🔥🔥 Ты просто лучший фотограф , ты большая умничка , так держать 👏 удачи тебе в дальнейшем и больших процветаний ❤️💋
-								</p>
-							</div>
-							<div class=" review-list__user">
-								<div class="review-list__img"><picture><source srcset="img/reviews/empty.webp" type="image/webp"><img src="img/reviews/empty.jpg" alt="Image"></picture></div>
-								<div class="review-list__info">
-									<p class="review-list__name">Айше Арсланова</p>
-									<a href="#" class="review-list__link">www.instagram.com/yogaangel</a>
-								</div>
-							</div>
-						</div>
-						<div class="review-list__item">
-							<div class="review-list__text">
-								<p class="review-list__text-p">Ангелина один из тех фотографов ,которому не нужно 5 часов на съёмку чтобы получились шикарные фотографии . За 45 минут мы отсняли в разных локациях Мега шедевры . Очень легко на съёмку было , подсказывала по позированию , получив отработанные
-									фото осталась в восторге не только я , но и все кто видел это )
-								</p>
-							</div>
-							<div class="review-list__user">
-								<div class="review-list__img">
-									<picture><source srcset="img/reviews/empty.webp" type="image/webp"><img src="img/reviews/empty.jpg" alt="Image"></picture>
-								</div>
-								<div class="review-list__info">
-									<p class="review-list__name">Виктория</p>
-									<a href="#" class="review-list__link"></a>
-								</div>
-							</div>
-						</div>
-						<div class="review-list__item">
-							<div class="review-list__text">
-								<p class="review-list__text-p">Хочу поблагодарить Ангелину за прекрасную атмосферную съемочку!!! Ангелина помогла подобрать образ , подсказать с чем что лучше сочетать ) самые сложные фотосессии - это с подвижными и активными детками , чудесно поладили и в форме игры
-									получились прекрасные кадры )) очень
-									приятно было с вами работать ) а самое крутое это результат 😍 фото просто шикарны ☺️☺️☺️Спасибо 🙏</p>
-							</div>
-							<div class="review-list__user">
-								<div class="review-list__img">
-									<picture><source srcset="img/reviews/1.webp" type="image/webp"><img src="img/reviews/1.jpeg" alt="Image"></picture>
-								</div>
-								<div class="review-list__info">
-									<p class="review-list__name">Яна</p>
-									<a href="#" class="review-list__link">vk.com/id583472380</a>
-								</div>
-							</div>
-						</div>
-						<div class="review-list__item">
-							<div class="review-list__text">
-								<p> Нереально крутые снимки, Ангелина, спасибо огромное, с тобой очень приятно работать, а видеть результат просто нечто 😍 очень круто, нет слов
-								</p>
-							</div>
-							<div class="review-list__user">
-								<div class="review-list__img">
-									<picture><source srcset="img/reviews/3.webp" type="image/webp"><img src="img/reviews/3.jpg" alt="Image"></picture>
-								</div>
-								<div class="review-list__info">
-									<p class="review-list__name">Анна</p>
-									<a href="#" class="review-list__link">http://www.instagram.com/anya.yugayhttp://www.instagram.com/anya.yugay</a>
+			<section class="first first zoom">
+				<div class="first__container">
+					<div class="first__left first__left-child">
+						<h1 class="first__title-left _title">
+							<span id="animatedImage " class="_underline _underline-estate _underline__bg-brown _sizeChanger">Продажа
+							</span>Недвижимости
+						</h1>
+						<p class="first__text">Недвижимость на продажу и аренду — это ваш шанс найти идеальное место для жизни или инвестиций. Мы предлагаем широкий выбор объектов, от уютных квартир до просторных домов, каждый из которых готов стать вашим новым домом.</p>
+					</div>
+					<div class="first__right  first__right-child">
+						<div class="first__slider-container">
+							<div class="first__slider swiper">
+								<div class="first__wrapper swiper-wrapper">
+									<div class="first__slide swiper-slide">
+										<picture><source srcset="img/placeholder.webp" type="image/webp"><img src="img/placeholder.jpg" alt="Image"></picture>
+									</div>
+									<div class="first__slide swiper-slide">
+										<picture><source srcset="img/placeholder.webp" type="image/webp"><img src="img/placeholder.jpg" alt="Image"></picture>
+									</div>
+									<div class="first__slide swiper-slide">
+										<picture><source srcset="img/placeholder.webp" type="image/webp"><img src="img/placeholder.jpg" alt="Image"></picture>
+									</div>
+									<div class="first__slide swiper-slide">
+										<picture><source srcset="img/placeholder.webp" type="image/webp"><img src="img/placeholder.jpg" alt="Image"></picture>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</section>
+			<section class="estate zoom">
+				<div class="estate__container">
+					<!-- <div class="estate__button-container">
+                  <button class="estate__button _active" data-action="sell">Продаю</button>
+                  <button class="estate__button" data-action="rent">Сдаю</button>
+               </div> -->
+					<div class="estate__items">
+						<a href="product.html" class="estate__item estate__hover">
+							<div class="estate__img  _anim-items">
+								<picture><source srcset="img/estate/1.webp" type="image/webp"><img src="img/estate/1.jpg" alt="Image"></picture>
+								<p class="estate__update">Обновлено: 29.01.2024</p>
+								<button class="estate__like" data-post-id="1154" data-image-id="1263">
+									<div class="_icon-like"></div>
+									<div class="_icon-like-fill"></div> <span class="estate__like-counter">0</span>
+								</button>
+							</div>
+							<div class="estate__estate-info estate-info">
+								<h6 class="estate-info__title">Четырёхкомнатная квартира
+									в Ялте, Приморский парк</h6>
+								<div class="estate-info__items">
+									<div class="estate-info__row">
+										<div class="estate-info__item">
+											<div class="estate-info__img">
+												<img src="img/estate/info/1.svg " alt="Image">
+											</div>
+											<div class="estate-info__texts">
+												<p class="estate-info__type">Недвижимость:</p>
+												<p class="estate-info__value">Квартира</p>
+											</div>
+										</div>
+										<div class="estate-info__item">
+											<div class="estate-info__img">
+												<img src="img/estate/info/2.svg " alt="Image">
+											</div>
+											<div class="estate-info__texts">
+												<p class="estate-info__type">Стоимость:</p>
+												<p class="estate-info__value">154 442 230 руб.</p>
+											</div>
+										</div>
+									</div>
+									<div class="estate-info__row">
+										<div class="estate-info__item">
+											<div class="estate-info__img">
+												<img src="img/estate/info/3.svg " alt="Image">
+											</div>
+											<div class="estate-info__texts">
+												<p class="estate-info__type">Спален:</p>
+												<p class="estate-info__value">4</p>
+											</div>
+										</div>
+										<div class="estate-info__item">
+											<div class="estate-info__img">
+												<img src="img/estate/info/4.svg " alt="Image">
+											</div>
+											<div class="estate-info__texts">
+												<p class="estate-info__type">Площадь:</p>
+												<p class="estate-info__value">237.70 м <sup>2</sup></p>
+											</div>
+										</div>
+										<div class="estate-info__item">
+											<div class="estate-info__img">
+												<img src="img/estate/info/5.svg " alt="Image">
+											</div>
+											<div class="estate-info__texts">
+												<p class="estate-info__type">Этаж:</p>
+												<p class="estate-info__value">12/16</p>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</a>
+						<a href="product.html" class="estate__item estate__hover">
+							<div class="estate__img  _anim-items">
+								<picture><source srcset="img/estate/2.webp" type="image/webp"><img src="img/estate/2.jpg" alt="Image"></picture>
+								<p class="estate__update">Обновлено: 29.01.2024</p>
+								<button class="estate__like" data-post-id="1154" data-image-id="1263">
+									<div class="_icon-like"></div>
+									<div class="_icon-like-fill"></div> <span class="estate__like-counter">0</span>
+								</button>
+							</div>
+							<div class="estate__estate-info estate-info">
+								<h6 class="estate-info__title">Четырёхкомнатная квартира
+									в Ялте, Приморский парк</h6>
+								<div class="estate-info__items">
+									<div class="estate-info__row">
+										<div class="estate-info__item">
+											<div class="estate-info__img">
+												<img src="img/estate/info/1.svg " alt="Image">
+											</div>
+											<div class="estate-info__texts">
+												<p class="estate-info__type">Недвижимость:</p>
+												<p class="estate-info__value">Квартира</p>
+											</div>
+										</div>
+										<div class="estate-info__item">
+											<div class="estate-info__img">
+												<img src="img/estate/info/2.svg " alt="Image">
+											</div>
+											<div class="estate-info__texts">
+												<p class="estate-info__type">Стоимость:</p>
+												<p class="estate-info__value">154 442 230 руб.</p>
+											</div>
+										</div>
+									</div>
+									<div class="estate-info__row">
+										<div class="estate-info__item">
+											<div class="estate-info__img">
+												<img src="img/estate/info/3.svg " alt="Image">
+											</div>
+											<div class="estate-info__texts">
+												<p class="estate-info__type">Спален:</p>
+												<p class="estate-info__value">4</p>
+											</div>
+										</div>
+										<div class="estate-info__item">
+											<div class="estate-info__img">
+												<img src="img/estate/info/4.svg " alt="Image">
+											</div>
+											<div class="estate-info__texts">
+												<p class="estate-info__type">Площадь:</p>
+												<p class="estate-info__value">237.70 м <sup>2</sup></p>
+											</div>
+										</div>
+										<div class="estate-info__item">
+											<div class="estate-info__img">
+												<img src="img/estate/info/5.svg " alt="Image">
+											</div>
+											<div class="estate-info__texts">
+												<p class="estate-info__type">Этаж:</p>
+												<p class="estate-info__value">12/16</p>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</a>
+						<a href="product.html" class="estate__item estate__hover ">
+							<div class="estate__img _anim-items">
+								<picture><source srcset="img/estate/3.webp" type="image/webp"><img src="img/estate/3.jpg" alt="Image"></picture>
+								<p class="estate__update">Обновлено: 29.01.2024</p>
+								<button class="estate__like" data-post-id="1154" data-image-id="1263">
+									<div class="_icon-like"></div>
+									<div class="_icon-like-fill"></div> <span class="estate__like-counter">0</span>
+								</button>
+							</div>
+							<div class="estate__estate-info estate-info">
+								<h6 class="estate-info__title">Четырёхкомнатная квартира
+									в Ялте, Приморский парк</h6>
+								<div class="estate-info__items">
+									<div class="estate-info__row">
+										<div class="estate-info__item">
+											<div class="estate-info__img">
+												<img src="img/estate/info/1.svg " alt="Image">
+											</div>
+											<div class="estate-info__texts">
+												<p class="estate-info__type">Недвижимость:</p>
+												<p class="estate-info__value">Квартира</p>
+											</div>
+										</div>
+										<div class="estate-info__item">
+											<div class="estate-info__img">
+												<img src="img/estate/info/2.svg " alt="Image">
+											</div>
+											<div class="estate-info__texts">
+												<p class="estate-info__type">Стоимость:</p>
+												<p class="estate-info__value">154 442 230 руб.</p>
+											</div>
+										</div>
+									</div>
+									<div class="estate-info__row">
+										<div class="estate-info__item">
+											<div class="estate-info__img">
+												<img src="img/estate/info/3.svg " alt="Image">
+											</div>
+											<div class="estate-info__texts">
+												<p class="estate-info__type">Спален:</p>
+												<p class="estate-info__value">4</p>
+											</div>
+										</div>
+										<div class="estate-info__item">
+											<div class="estate-info__img">
+												<img src="img/estate/info/4.svg " alt="Image">
+											</div>
+											<div class="estate-info__texts">
+												<p class="estate-info__type">Площадь:</p>
+												<p class="estate-info__value">237.70 м <sup>2</sup></p>
+											</div>
+										</div>
+										<div class="estate-info__item">
+											<div class="estate-info__img">
+												<img src="img/estate/info/5.svg " alt="Image">
+											</div>
+											<div class="estate-info__texts">
+												<p class="estate-info__type">Этаж:</p>
+												<p class="estate-info__value">12/16</p>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</a>
+						<a href="product.html" class="estate__item estate__hover ">
+							<div class="estate__img _anim-items">
+								<picture><source srcset="img/estate/3.webp" type="image/webp"><img src="img/estate/3.jpg" alt="Image"></picture>
+								<p class="estate__update">Обновлено: 29.01.2024</p>
+								<button class="estate__like" data-post-id="1154" data-image-id="1263">
+									<div class="_icon-like"></div>
+									<div class="_icon-like-fill"></div> <span class="estate__like-counter">0</span>
+								</button>
+							</div>
+							<div class="estate__estate-info estate-info">
+								<h6 class="estate-info__title">Четырёхкомнатная квартира
+									в Ялте, Приморский парк</h6>
+								<div class="estate-info__items">
+									<div class="estate-info__row">
+										<div class="estate-info__item">
+											<div class="estate-info__img">
+												<img src="img/estate/info/1.svg " alt="Image">
+											</div>
+											<div class="estate-info__texts">
+												<p class="estate-info__type">Недвижимость:</p>
+												<p class="estate-info__value">Квартира</p>
+											</div>
+										</div>
+										<div class="estate-info__item">
+											<div class="estate-info__img">
+												<img src="img/estate/info/2.svg " alt="Image">
+											</div>
+											<div class="estate-info__texts">
+												<p class="estate-info__type">Стоимость:</p>
+												<p class="estate-info__value">154 442 230 руб.</p>
+											</div>
+										</div>
+									</div>
+									<div class="estate-info__row">
+										<div class="estate-info__item">
+											<div class="estate-info__img">
+												<img src="img/estate/info/3.svg " alt="Image">
+											</div>
+											<div class="estate-info__texts">
+												<p class="estate-info__type">Спален:</p>
+												<p class="estate-info__value">4</p>
+											</div>
+										</div>
+										<div class="estate-info__item">
+											<div class="estate-info__img">
+												<img src="img/estate/info/4.svg " alt="Image">
+											</div>
+											<div class="estate-info__texts">
+												<p class="estate-info__type">Площадь:</p>
+												<p class="estate-info__value">237.70 м <sup>2</sup></p>
+											</div>
+										</div>
+										<div class="estate-info__item">
+											<div class="estate-info__img">
+												<img src="img/estate/info/5.svg " alt="Image">
+											</div>
+											<div class="estate-info__texts">
+												<p class="estate-info__type">Этаж:</p>
+												<p class="estate-info__value">12/16</p>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</a>
+					</div>
+					<!-- <button class="estate__more _brown-btn">Показать еще</button> -->
+				</div>
+			</section>
 			<span id="contacts"></span>
 			<section class="contacts zoom">
 				<div class="contacts__container">
 					<p class="contacts__uptitle _uptitle">{Контакты}</p>
-					<h3 class="contacts__title _title">Заказать съемку</h3>
+					<h3 class="contacts__title _title">Заказать просмотр</h3>
 					<div class="contacts__items">
 						<div class="contacts__item contacts__item-side">
 							<p class="contacts__text">Свяжитесь со мной любым удобным образом:</p>
@@ -178,8 +388,8 @@
 							</div>
 						</div>
 						<div class="contacts__item contacts__item-middle">
-							<div class="contacts__img">
-								<picture><source srcset="img/contacts/1.webp" type="image/webp"><img src="img/contacts/1.jpg" alt="Image"></picture>
+							<div class="contacts__img contacts__img-border">
+								<picture><source srcset="img/estate/3.webp" type="image/webp"><img src="img/estate/3.jpg" alt="Image"></picture>
 							</div>
 							<div class="contacts__heart">
 								<svg width="24" height="33" viewBox="0 0 24 33" fill="none" xmlns="http://www.w3.org/2000/svg">

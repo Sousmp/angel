@@ -6,9 +6,10 @@
 	<meta charset="UTF-8">
 	<meta name="format-detection" content="telephone=no">
 	<!-- <style>body{opacity: 0;}</style> -->
-	<link rel="stylesheet" href="css/style.min.css?_v=20241019145645">
+	<link rel="stylesheet" href="css/style.min.css?_v=20241112132334">
 	<!-- <meta name="robots" content="noindex, nofollow"> -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 </head>
 
 <body>
@@ -16,12 +17,15 @@
 	<div class="wrapper" id="content" style="opacity: 0;">
 		<header class="header zoom">
 			<div class="header__container">
-				<div class="header__logo">
-					<a href="home.html" class="page-link">
-						<picture><source srcset="img/logo.webp" type="image/webp"><img src="img/logo.png" alt="Image"></picture>
+				<div class="header__logo header__logo-back">
+					<a href="estate.html" class="page-link">
+						<svg width="41" height="41" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<rect x="0.5" y="0.5" width="40" height="40" rx="19.5" stroke="#fbfbfb"></rect>
+							<path d="M22.5 13.75L16.25 20L22.5 26.25" stroke="#fbfbfb" stroke-linecap="round" stroke-linejoin="round"></path>
+						</svg>
 					</a>
 				</div>
-				<ul data-da=".menu__body,960" class="menu__list">
+				<ul class="header__list">
 					<li class="menu__item menu__submenu tooltip-button">
 						<a href="#" class="menu__link ">Портфолио</a>
 						<ul class="menu__sublist">
@@ -43,7 +47,7 @@
 			</div>
 		</header>
 		<main class="page">
-			<section class="product-name">
+			<section class="product-name zoom">
 				<div class="product-name__container">
 					<h1 class="product-name__title">Двухуровневый апартамент в трех шагах от моря</h1>
 					<p class="product-name__text">
@@ -57,7 +61,6 @@
 						<div class="photos__navigate">
 							<div class="photos__arrow photos__arrow-left"><span class="_icon-left-arrow"></span></div>
 							<div class="photos__arrow photos__arrow-right"><span class="_icon-right-arrow"></span></div>
-							<div class="photos__number">0/0 Offers</div>
 						</div>
 						<div class="photos__wrapper swiper-wrapper">
 							<div class="photos__slide swiper-slide">
@@ -78,10 +81,13 @@
 						</div>
 					</div>
 					<div class="photos__overlay"></div>
-					<div class="photos__pagination"></div>
+					<div class="photos__counters">
+						<div class="photos__pagination"></div>
+						<div class="photos__number">0/0 Offers</div>
+					</div>
 				</div>
 			</section>
-			<section class="info">
+			<section class="info zoom">
 				<div class="info__container">
 					<div class="info__items">
 						<div class="info__item">
@@ -130,6 +136,27 @@
 							</div>
 						</div>
 					</div>
+					<div class="info__rules rules">
+						<h3 class="rules__title">Правила</h3>
+						<div class="rules__items">
+							<div class="rules__item">
+								<p class="rules__name">Количество гостей: </p>
+								<span class="rules__value">7</span>
+							</div>
+							<div class="rules__item">
+								<p class="rules__name">Можно с детьми: </p>
+								<span class="rules__value">Нет</span>
+							</div>
+							<div class="rules__item">
+								<p class="rules__name">Можно с животными: </p>
+								<span class="rules__value">Нет</span>
+							</div>
+							<div class="rules__item">
+								<p class="rules__name">Можно курить: </p>
+								<span class="rules__value">Нет</span>
+							</div>
+						</div>
+					</div>
 					<p class="info__text">
 						Просторная и уютная квартира в ЖК «Омега». <br> ЖК «Омега», состоящий из 3-x домов, находится на закрытой и охраняемой территории с круглосуточным видеонаблюдением.
 						<br> <br> В каждой квартире удобная планировка, просторные террасы и балконы, толстые стены, качественная отделка. Статус - квартира! Стоимость содержания составляет 40 руб/м².
@@ -137,7 +164,7 @@
 					</p>
 				</div>
 			</section>
-			<section class="map">
+			<section class="map zoom">
 				<div data-showmore class="map__container">
 					<button hidden data-showmore-button="1" type="button" class="map__btn _brown-btn">
 						<span>Показать на карте</span>
@@ -195,9 +222,7 @@
 							</div>
 						</div>
 						<div class="contacts__item contacts__item-middle">
-							<div class="contacts__img contacts__img-border">
-								<picture><source srcset="img/estate/3.webp" type="image/webp"><img src="img/estate/3.jpg" alt="Image"></picture>
-							</div>
+							<div class="contacts__img contacts__img-border js-dynamic-image" data-placeholder="true"></div>
 							<div class="contacts__heart">
 								<svg width="24" height="33" viewBox="0 0 24 33" fill="none" xmlns="http://www.w3.org/2000/svg">
 									<path d="M12.5969 9.47893C11.2272 6.84589 8.66832 4.5974 5.43834 5.18251C1.00835 5.985 0.306869 11.1289 1.94911 14.5784C2.98351 16.7511 4.58151 18.371 6.47038 19.8158C8.95943 21.7197 11.5164 23.531 13.967 25.4856C15.6711 26.8447 17.3802 28.2151 18.9876 29.6893C19.9531 30.5747 18.3754 29.1489 18.12 28.8751" stroke="#FBFBFB" stroke-linecap="round"></path>
@@ -259,6 +284,33 @@
 			<div class="icon-close"></div>
 		</div>
 		<nav class="menu__body">
+			<a href="#" class="menu__home-link">Главная</a>
+			<div class="menu__menus">
+				<ul class="menu__list">
+					<li class="menu__item">
+						<a href="home.html" class="menu__text">Фотосессия</a>
+					</li>
+					<li class="menu__item"><a href="#" class="menu__link page-link">Love-story</a></li>
+					<li class="menu__item"><a href="#" class="menu__link">Индивидуальный портрет</a></li>
+					<li class="menu__item"><a href="gallery.html" class="menu__link page-link">Фотосессия беременности</a></li>
+					<li class="menu__item"><a href="#" class="menu__link">Семейная фотосессия</a></li>
+					<li class="menu__item"><a href="#" class="menu__link">Свадебная фотосессия</a></li>
+					<li class="menu__item"><a href="#" class="menu__link">Интерьерная съемка</a></li>
+					<li class="menu__item"><a href="#" class="menu__link">Предметная съемка</a></li>
+					<li class="menu__item"><a href="#" data-goto-header data-goto="#services" class="menu__link">Услуги</a></li>
+					<li class="menu__item"><a href="#" data-goto-header data-goto="#reviews" class="menu__link">Отзывы</a></li>
+					<li class="menu__item"><a href="#" data-goto-header data-goto="#contacts" class="menu__link">Контакты</a></li>
+				</ul>
+				<ul class="menu__list">
+					<li class="menu__item">
+						<a href="home-estate.html" class="menu__text">Недвижимость</a>
+					</li>
+					<li class="menu__item"><a href="sell.html" class="menu__link page-link">Продажа Недвижимости</a></li>
+					<li class="menu__item"><a href="rent.html" class="menu__link">Аренда Недвижимости</a></li>
+					<li class="menu__item"><a href="#" data-goto-header data-goto="#reviews" class="menu__link">Отзывы</a></li>
+					<li class="menu__item"><a href="#" data-goto-header data-goto="#contacts" class="menu__link">Контакты</a></li>
+				</ul>
+			</div>
 		</nav>
 	</div>
 
@@ -365,6 +417,6 @@
 			</div>
 		</div>
 	</div>
-	<script src="https://unpkg.com/imask?_v=20241019145645"></script>
-	<script src="js/app.min.js?_v=20241019145645"></script>
+	<script src="https://unpkg.com/imask?_v=20241112132334"></script>
+	<script src="js/app.min.js?_v=20241112132334"></script>
 </body>

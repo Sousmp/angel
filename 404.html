@@ -6,10 +6,10 @@
 	<meta charset="UTF-8">
 	<meta name="format-detection" content="telephone=no">
 	<!-- <style>body{opacity: 0;}</style> -->
-	<link rel="stylesheet" href="css/style.min.css?_v=20240613212111">
-	<link rel="shortcut icon" href="favicon.ico">
+	<link rel="stylesheet" href="css/style.min.css?_v=20241112132334">
 	<!-- <meta name="robots" content="noindex, nofollow"> -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 </head>
 
 <body>
@@ -22,7 +22,7 @@
 						<picture><source srcset="img/logo.webp" type="image/webp"><img src="img/logo.png" alt="Image"></picture>
 					</a>
 				</div>
-				<ul data-da=".menu__body,960" class="menu__list">
+				<ul class="header__list">
 					<li class="menu__item menu__submenu tooltip-button">
 						<a href="#" class="menu__link ">Портфолио</a>
 						<ul class="menu__sublist">
@@ -74,16 +74,16 @@
 									<span class="_icon-phone"></span>
 									+7 989 092 28 46
 								</a>
-								<a href="" class="contacts__link">
+								<a href="" target="_blank" class="contacts__link">
 									<span class="_icon-whatsapp"></span>
 									whatsapp
 								</a>
-								<a href="" class="contacts__link">
+								<a href="" target="_blank" class="contacts__link">
 									<span class="_icon-telegram"></span>
 									telegram
 								</a>
 								<div class="contacts__star-container">
-									<a href="" class="contacts__link">
+									<a href="" target="_blank" class="contacts__link">
 										<span class="_icon-instagram"></span>
 										instagram
 									</a>
@@ -100,7 +100,7 @@
 										</div>
 									</button>
 								</div>
-								<a href="" class="contacts__link">
+								<a href="" target="_blank" class="contacts__link">
 									<span class="_icon-vk"></span>
 									vk
 								</a>
@@ -171,6 +171,33 @@
 			<div class="icon-close"></div>
 		</div>
 		<nav class="menu__body">
+			<a href="#" class="menu__home-link">Главная</a>
+			<div class="menu__menus">
+				<ul class="menu__list">
+					<li class="menu__item">
+						<a href="home.html" class="menu__text">Фотосессия</a>
+					</li>
+					<li class="menu__item"><a href="#" class="menu__link page-link">Love-story</a></li>
+					<li class="menu__item"><a href="#" class="menu__link">Индивидуальный портрет</a></li>
+					<li class="menu__item"><a href="gallery.html" class="menu__link page-link">Фотосессия беременности</a></li>
+					<li class="menu__item"><a href="#" class="menu__link">Семейная фотосессия</a></li>
+					<li class="menu__item"><a href="#" class="menu__link">Свадебная фотосессия</a></li>
+					<li class="menu__item"><a href="#" class="menu__link">Интерьерная съемка</a></li>
+					<li class="menu__item"><a href="#" class="menu__link">Предметная съемка</a></li>
+					<li class="menu__item"><a href="#" data-goto-header data-goto="#services" class="menu__link">Услуги</a></li>
+					<li class="menu__item"><a href="#" data-goto-header data-goto="#reviews" class="menu__link">Отзывы</a></li>
+					<li class="menu__item"><a href="#" data-goto-header data-goto="#contacts" class="menu__link">Контакты</a></li>
+				</ul>
+				<ul class="menu__list">
+					<li class="menu__item">
+						<a href="home-estate.html" class="menu__text">Недвижимость</a>
+					</li>
+					<li class="menu__item"><a href="sell.html" class="menu__link page-link">Продажа Недвижимости</a></li>
+					<li class="menu__item"><a href="rent.html" class="menu__link">Аренда Недвижимости</a></li>
+					<li class="menu__item"><a href="#" data-goto-header data-goto="#reviews" class="menu__link">Отзывы</a></li>
+					<li class="menu__item"><a href="#" data-goto-header data-goto="#contacts" class="menu__link">Контакты</a></li>
+				</ul>
+			</div>
 		</nav>
 	</div>
 
@@ -187,7 +214,7 @@
 			<button data-close type="button" class="popup__close  request-popup__close"></button>
 			<div class="popup__content request-popup__content">
 				<div class="request-popup__img">
-					<picture><source srcset="img/request/1.webp" type="image/webp"><img src="img/request/1.jpg" alt="Image"></picture>
+					<picture><source srcset="img/contacts/3.webp" type="image/webp"><img src="img/contacts/3.JPG" alt="Image"></picture>
 				</div>
 				<h5 class="request-popup__title">Заполните форму, я свяжусь с вами в течение суток</h5>
 				<form action="#" class="request-popup__form">
@@ -207,6 +234,58 @@
 					<label class="request-popup__error" id="agreementError">Обязательное поле</label>
 					<button type="submit" class="request-popup__submit">Отправить</button>
 				</form>
+				<div class="request-popup__items">
+					<div class="request-popup__item-first contacts__item contacts__item-middle contacts__logo">
+						<div class="contacts__img">
+							<picture><source srcset="img/contacts/2.webp" type="image/webp"><img src="img/contacts/2.png" alt="Image"></picture>
+						</div>
+						<div class="contacts__heart">
+							<svg width="24" height="33" viewBox="0 0 24 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path d="M12.5969 9.47893C11.2272 6.84589 8.66832 4.5974 5.43834 5.18251C1.00835 5.985 0.306869 11.1289 1.94911 14.5784C2.98351 16.7511 4.58151 18.371 6.47038 19.8158C8.95943 21.7197 11.5164 23.531 13.967 25.4856C15.6711 26.8447 17.3802 28.2151 18.9876 29.6893C19.9531 30.5747 18.3754 29.1489 18.12 28.8751" stroke="#FBFBFB" stroke-linecap="round"></path>
+								<path d="M12.6321 9.67352C13.0766 7.30386 14.1802 4.56269 16.1977 3.0716C17.2271 2.31079 18.9685 1.182 20.3003 1.653C22.0527 2.27281 22.2969 4.81748 22.4303 6.38586C22.6821 9.34548 22.3401 12.4117 22.1592 15.3662C21.994 18.0652 21.2454 20.6086 20.7176 23.2468C20.3919 24.8752 20.3492 26.5718 20.1553 28.2162C20.063 28.9993 19.9255 29.7502 19.8483 30.527C19.8177 30.8345 19.8309 31.3412 19.7188 31.5998" stroke="#FBFBFB" stroke-linecap="round"></path>
+							</svg>
+						</div>
+					</div>
+					<div class="request-popup__item-last contacts__item contacts__item-side">
+						<p class="contacts__text">Свяжитесь со мной любым удобным образом:</p>
+						<div class="contacts__buttons">
+							<a href="tel:+79890922846" class="contacts__link contacts__phone">
+								<span class="_icon-phone"></span>
+								+7 989 092 28 46
+							</a>
+							<a href="" target="_blank" class="contacts__link">
+								<span class="_icon-whatsapp"></span>
+								whatsapp
+							</a>
+							<a href="" target="_blank" class="contacts__link">
+								<span class="_icon-telegram"></span>
+								telegram
+							</a>
+							<div class="contacts__star-container">
+								<a href="" target="_blank" class="contacts__link">
+									<span class="_icon-instagram"></span>
+									instagram
+								</a>
+								<button class="contacts__star-button tooltip-button">
+									<svg role="presentation" width="100%" height="100%" style="display:block;" viewBox="0 0 25 25">
+										<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+											<g fill="#ffffff">
+												<polygon points="12.605 16.6945552 7.90485152 19.1655695 8.80250001 13.9318772 5 10.2253557 10.2549258 9.46177034 12.605 4.69999981 14.9550743 9.46177034 20.21 10.2253557 16.4075 13.9318772 17.3051485 19.1655695"></polygon>
+											</g>
+										</g>
+									</svg>
+									<div class="contacts__star-plate tooltip-plate">
+										<p>Запрещенная социальная сеть на территории РФ</p>
+									</div>
+								</button>
+							</div>
+							<a href="" target="_blank" class="contacts__link">
+								<span class="_icon-vk"></span>
+								vk
+							</a>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -225,6 +304,6 @@
 			</div>
 		</div>
 	</div>
-	<script src="https://unpkg.com/imask?_v=20240613212111"></script>
-	<script src="js/app.min.js?_v=20240613212111"></script>
+	<script src="https://unpkg.com/imask?_v=20241112132334"></script>
+	<script src="js/app.min.js?_v=20241112132334"></script>
 </body>
